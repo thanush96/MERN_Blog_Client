@@ -2,19 +2,20 @@ import React from 'react'
 import styled from 'styled-components'
 
 
-const header=()=>{
-    return <MainContainer>
+const header = () => {
+    return (<MainContainer>
         <h1>
-        Welcome to the <br/>
+            Welcome to the <br />
         MERN Stack blog!
         </h1>
-    </MainContainer>;
-}
+    </MainContainer>
+    );
+};
 
 export default header;
 
 //MAIN Container
-const MainContainer=styled.header`
+const MainContainer = styled.header`
 background: url(../../images/header-bg.jpg) no-repeat center/cover;
 height:25rem;
 
@@ -27,7 +28,5 @@ h1{
   left:50%;
 
 }
-
-
 `;
 
