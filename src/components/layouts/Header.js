@@ -17,7 +17,7 @@ export default header;
 //MAIN Container
 const MainContainer = styled.header`
 background: url(../../images/header-bg.jpg) no-repeat center/cover;
-height:25rem;
+height:15rem;
 
 h1{
   transform:translate(-50%, -50%);
