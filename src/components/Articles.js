@@ -1,10 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
+import spinner from "../loading.gif"
+
 
 const Articles = ({ posts }) => {
     return (
         <MainContainer>
-            {posts.map((article, key) => (
+            
+            {
+                !posts.length ? <img src={spinner} alt="loading.." />:
+                
+                posts.map((article, key) => (
                 <div className='container'>
                     <h2>{article.title}</h2>
                     <p>{article.article}</p>
@@ -28,5 +34,13 @@ export default Articles
 
 //Main Container
 const MainContainer = styled.div`
+
+img{
+    width:5rem;
+    display:block;
+    margin: 0 auto;
+
+
+}
 
 `;
