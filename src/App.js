@@ -8,6 +8,7 @@ import Navbar from './components/layouts/Navbar';
 import Footer from './components/layouts/Footer';
 import Articles from './components/Articles';
 import { AddArticle } from './components/layouts/AddArticle';
+import Article from './components/layouts/Article';
 
 function App() {
   const [posts, setPosts] = useState([]);
@@ -21,7 +22,9 @@ function App() {
       <Header />
       <Navbar />
       <Route exact path="/" render={() => <Articles posts={posts} />} />
+      <Route path="/article/:id" render={(props) => <Article  {...props} posts={posts} />} />
       <Route path="/add-article" component={AddArticle}/>
+
       <Footer />
 
     </div>
