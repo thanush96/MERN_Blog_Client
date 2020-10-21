@@ -1,43 +1,53 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 
-export const AddArticle = () => {
+export const EditArticle = (props) => {
 	const [title, setTitle] = useState('');
 	const [article, setArticle] = useState('');
-  const [authorname, setAuthorName] = useState('');
-  
-  const changeOnClick=e=>{
-    e.preventDefault();
+	const [authorname, setAuthorName] = useState('');
+	const [message, setMessage] = useState('');
 
-    const articles={
-      title,
-      article,
-      authorname 
-    };
+	const changeOnClick = (e) => {
+		e.preventDefault();
 
-    axios
-    .post("/articles/add",articles)
-    .then(res=>console.log(res.data))
-    .catch(err=>{
-      console.log(err);
-    });
+		const articles = {
+			title,
+			article,
+			authorname,
+		};
 
+		setTitle('');
+		setArticle('');
+		setAuthorName('');
 
-  };
+		axios
+			.put(`/articles/update/${props.match.params.id}`, articles)
+			.then(res => setMessage(res.data))
+			.catch(err => {
+				console.log(err);
+			});
+	};
 
+	useEffect(() => {
+		axios
+			.get(`/articles/${props.match.params.id}`)
+			.then(res => [setTitle(res.data.title), setArticle(res.data.article), setAuthorName(res.data.authorname)])
+			.catch(error => console.log(error));
+	}, []);
 
 	return (
 		<AddArticleContainer>
 			<div className="container">
-				<h1>Add New Artile</h1>
-				<form onSubmit={changeOnClick} encType="multypart/form-data" >
+				<h1>Update Article</h1>
+				<span className="message">{message}</span>
+				<form onSubmit={changeOnClick} encType="multypart/form-data">
 					<div className="form-group">
 						<label htmlFor="authername">Author Name</label>
 						<br />
 						<input
-              type="text"
-              value={authorname}
+							type="text"
+							value={authorname}
 							onChange={(e) => setAuthorName(e.target.value)}
 							className="form-control"
 							placeholder="Author Name"
@@ -47,8 +57,8 @@ export const AddArticle = () => {
 						<label htmlFor="title">Title</label>
 						<br />
 						<input
-              type="text"
-              value={title}
+							type="text"
+							value={title}
 							onChange={(e) => setTitle(e.target.value)}
 							className="form-control"
 							placeholder="Title"
@@ -59,7 +69,7 @@ export const AddArticle = () => {
 						<label htmlFor="artile">Article</label>
 						<br />
 						<textarea
-            value={article}
+							value={article}
 							className="form-control"
 							onChange={(e) => setArticle(e.target.value)}
 							rows="3"
@@ -67,7 +77,7 @@ export const AddArticle = () => {
 					</div>
 
 					<button type="submit" className="btn btn-primary">
-						Post Article
+						Update Article
 					</button>
 				</form>
 			</div>
@@ -75,7 +85,7 @@ export const AddArticle = () => {
 	);
 };
 
-export default AddArticle;
+export default EditArticle;
 
 //Main Container
 const AddArticleContainer = styled.div`
@@ -95,5 +105,11 @@ const AddArticleContainer = styled.div`
 		&:hover {
 			background: var(--dark-green);
 		}
+	}
+
+	.message {
+		font-weight: 900;
+		color: tomato;
+		padding: 1rem 1rem 1rem 0;
 	}
 `;

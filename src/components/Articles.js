@@ -11,9 +11,11 @@ const Articles = ({ posts }) => {
 			) : (
 				posts.map((article, key) => (
 					<div className="container" key={key}>
-						<Link to={{
-                            pathname:`/article/${article._id}`
-                        }}>
+						<Link
+							to={{
+								pathname: `/article/${article._id}`,
+							}}
+						>
 							<h2>{article.title}</h2>
 						</Link>
 
@@ -22,14 +24,12 @@ const Articles = ({ posts }) => {
 
 						<div className="row my-5">
 							<div className="col-sm-2">
-								<Link to="/edid-article" className="btn btn-outline-success">
-									{' '}
+								<Link to={`/update/${article._id}`} className="btn btn-outline-success">
 									Edit Article
 								</Link>
 							</div>
 							<div className="col-sm-2">
 								<button to="/delete-article" className="btn btn-outline-danger">
-									{' '}
 									Delete Article
 								</button>
 							</div>
