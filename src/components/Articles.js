@@ -1,9 +1,16 @@
-import React from 'react';
+import Axios from 'axios';
+import React,{useState} from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import spinner from '../loading.gif';
 
 const Articles = ({ posts }) => {
+	const [article, setArticle] = useState([]);
+	//DELETE ARTICLE BY ID
+	const deleteArticle = (id) => {
+		Axios.delete(`/articles/${id}`).then((res) => alert(res.data));
+		setArticle(article.filter((elem) => elem._id !== id));
+	};
 	return (
 		<MainContainer>
 			{!posts.length ? (
@@ -29,7 +36,9 @@ const Articles = ({ posts }) => {
 								</Link>
 							</div>
 							<div className="col-sm-2">
-								<button to="/delete-article" className="btn btn-outline-danger">
+								<button 
+								onClick={()=>deleteArticle(article._id)} 
+								className="btn btn-outline-danger">
 									Delete Article
 								</button>
 							</div>
